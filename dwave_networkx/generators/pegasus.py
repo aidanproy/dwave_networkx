@@ -611,9 +611,12 @@ def get_pegasus_to_nice_fn(pegasus_graph=None, m=None):
         m = pegasus_graph.graph['rows']
     m1 = m - 1
     m2 = m - 2
-    def p2n0(u, w, k, z): return (m1 - w if u else m2-z, z if u else w, u, 7-k if u else k-4, 0)
-    def p2n1(u, w, k, z): return (m1 - w if u else m2-z, z if u else w, u, 3-k if u else k-8, 1)
-    def p2n2(u, w, k, z): return (m2 - w if u else m2-z, z if u else w-1, u, 11-k if u else k, 2)
+   # def p2n0(u, w, k, z): return (m1 - w if u else m2-z, z if u else w, u, 7-k if u else k-4, 0)
+   # def p2n1(u, w, k, z): return (m1 - w if u else m2-z, z if u else w, u, 3-k if u else k-8, 1)
+   # def p2n2(u, w, k, z): return (m2 - w if u else m2-z, z if u else w-1, u, 11-k if u else k, 2)
+    def p2n0(u, w, k, z): return (w-1 if u else z, z if u else w, u, k-4 if u else k-4, 0)
+    def p2n1(u, w, k, z): return (w-1 if u else z, z if u else w, u, k if u else k-8, 1)
+    def p2n2(u, w, k, z): return (w if u else z, z if u else w-1, u, k-8 if u else k, 2)
     def p2n(u, w, k, z): return [p2n0, p2n1, p2n2][(2-u-(2*u-1)*(k//4)) % 3](u, w, k, z)
     return p2n
 
